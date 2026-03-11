@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BioResearch Portal</title>
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="research-header">
+    <div class="header-left">
+        <span class="lab-badge">🧬</span>
+        <div>
+            <h1>BioResearch Sample Management System</h1>
+            <p>Internal Research & Laboratory Information Portal</p>
+        </div>
+    </div>
+
+    <div class="header-right">
+        <span class="version-badge">v1.0 • Research Release</span>
+    </div>
+</header>
+
+<!-- ===== APP LAYOUT ===== -->
+<div class="app-layout">
+
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="sidebar">
+        <h2 class="logo">BioPortal</h2>
+
+        <nav>
+
+            <!-- Core Navigation -->
+            <a href="{{ url_for('dashboard') }}" class="sidebar-link nav-item">
+                <span class="icon">📊</span>
+                <span class="label">Dashboard</span>
+            </a>
+
+            <a href="{{ url_for('samples') }}" class="sidebar-link nav-item">
+                <span class="icon">🧪</span>
+                <span class="label">Samples</span>
+            </a>
+
+            <a href="{{ url_for('export_samples') }}" class="sidebar-link nav-item">
+                <span class="icon">⬇</span>
+                <span class="label">Export Data</span>
+            </a>
+
+            <!-- ===== LAB MODULES ===== -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">Lab Modules</div>
+
+                <a href="{{ url_for('genomics') }}" class="sidebar-link nav-item">
+                    <span class="icon">🧬</span>
+                    <span class="label">Genomics Lab</span>
+                </a>
+
+                <a href="{{ url_for('proteomics') }}" class="sidebar-link nav-item">
+                    <span class="icon">🧪</span>
+                    <span class="label">Proteomics Lab</span>
+                </a>
+
+                <a href="{{ url_for('clinical') }}" class="sidebar-link nav-item">
+                    <span class="icon">🏥</span>
+                    <span class="label">Clinical Research</span>
+                </a>
+            </div>
+
+            <!-- Logout -->
+            <a href="{{ url_for('logout') }}" class="sidebar-link nav-item logout">
+                <span class="icon">🚪</span>
+                <span class="label">Logout</span>
+            </a>
+
+        </nav>
+    </aside>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer class="app-footer">
+    © 2026 • BioResearch Sample Management System |
+    Created by <strong>Tushar Bansal</strong>
+</footer>
+
+</body>
+</html>

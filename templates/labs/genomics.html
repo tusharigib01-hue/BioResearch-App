@@ -1,0 +1,79 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+<!-- ===================== -->
+<!-- GENOMICS HEADER -->
+<!-- ===================== -->
+<div class="lab-header mb-4">
+    <h2>🧬 Genomics Laboratory</h2>
+    <p>
+        High-throughput sequencing, genome analysis, and computational genomics
+        for understanding genetic variation and disease mechanisms.
+    </p>
+</div>
+
+<!-- ===================== -->
+<!-- GENOMICS INFO GRID -->
+<!-- ===================== -->
+<div class="lab-grid mb-4">
+
+    <div class="lab-card">
+        <h4>🧪 Experiments</h4>
+        <ul>
+            <li>Whole Genome Sequencing (WGS)</li>
+            <li>Whole Exome Sequencing (WES)</li>
+            <li>RNA Sequencing (RNA-Seq)</li>
+            <li>ChIP-Seq / ATAC-Seq</li>
+        </ul>
+    </div>
+
+    <div class="lab-card">
+        <h4>📁 Data Formats</h4>
+        <ul>
+            <li>FASTQ</li>
+            <li>BAM / CRAM</li>
+            <li>VCF</li>
+            <li>Gene Count Matrices</li>
+        </ul>
+    </div>
+
+    <div class="lab-card">
+        <h4>🧠 Analysis Tools</h4>
+        <ul>
+            <li>GATK</li>
+            <li>STAR / HISAT2</li>
+            <li>DESeq2 / EdgeR</li>
+            <li>UCSC / Ensembl Genome Browser</li>
+        </ul>
+    </div>
+
+</div>
+
+<!-- ===================== -->
+<!-- UPLOAD SEQUENCING DATA -->
+<!-- ===================== -->
+<div class="glass p-4">
+    <h4 class="mb-3">⬆ Upload Sequencing Data</h4>
+    <p class="text-muted">
+        Upload raw or processed genomics files for downstream analysis.
+    </p>
+
+    <form
+        action="{{ url_for('upload_sequencing', lab='genomics') }}"
+        method="POST"
+        enctype="multipart/form-data"
+    >
+        <input
+            type="file"
+            name="sequencing_file"
+            class="form-control mb-3"
+            required
+        >
+
+        <button type="submit" class="btn btn-primary">
+            Upload File
+        </button>
+    </form>
+</div>
+
+{% endblock %}

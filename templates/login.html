@@ -1,0 +1,11 @@
+{% extends "login_layout.html" %}
+{% block content %}
+<div class="glass p-5" style="width:350px;">
+  <h2 class="mb-4 text-center">Login</h2>
+  <form method="POST">
+    <input type="text" name="username" placeholder="Username" class="form-control mb-3" required>
+    <input type="password" name="password" placeholder="Password" class="form-control mb-3" required>
+    <button type="submit" class="btn btn-primary w-100">Login</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,131 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="mb-4 text-primary fw-bold">Research Dashboard</h1>
+
+<!-- ===== DASHBOARD CARDS ===== -->
+<div class="row g-4 mb-4">
+  <div class="col-md-3">
+    <div class="glass text-center p-4 shadow-sm">
+      <h6 class="text-muted">Total Researchers</h6>
+      <h2 class="fw-bold">{{ total_users }}</h2>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="glass text-center p-4 shadow-sm">
+      <h6 class="text-muted">Total Projects</h6>
+      <h2 class="fw-bold">{{ total_projects }}</h2>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="glass text-center p-4 shadow-sm">
+      <h6 class="text-muted">Total Samples</h6>
+      <h2 class="fw-bold">{{ total_samples }}</h2>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="glass text-center p-4 shadow-sm border border-success">
+      <h6 class="text-muted">Active Samples</h6>
+      <h2 class="text-success fw-bold">{{ active_samples }}</h2>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHARTS ===== -->
+<div class="row g-4">
+  <div class="col-md-6">
+    <div class="glass p-4 shadow-sm">
+      <h5 class="mb-3 fw-bold">Sample Status Distribution</h5>
+      <canvas id="statusChart" style="height:300px;"></canvas>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="glass p-4 shadow-sm">
+      <h5 class="mb-3 fw-bold">Samples per Project</h5>
+      <canvas id="projectChart" style="height:300px;"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHART.JS SCRIPT ===== -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const statusCtx = document.getElementById("statusChart").getContext("2d");
+new Chart(statusCtx, {
+  type: "doughnut", // changed from pie to doughnut for better aesthetics
+  data: {
+    labels: ["Active", "Used", "Archived"],
+    datasets: [{
+      data: [{{ active_samples }}, {{ used_samples }}, {{ archived_samples }}],
+      backgroundColor: [
+        'rgba(79, 139, 201, 0.85)',
+        'rgba(0, 200, 83, 0.85)',
+        'rgba(142, 68, 173, 0.85)'
+      ],
+      borderColor: '#fff',
+      borderWidth: 2
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 14 }, color: '#333' } },
+      tooltip: { enabled: true }
+    }
+  }
+});
+
+const projectCtx = document.getElementById("projectChart").getContext("2d");
+new Chart(projectCtx, {
+  type: "bar",
+  data: {
+    labels: {{ project_labels|tojson }},
+    datasets: [{
+      label: "Number of Samples",
+      data: {{ project_counts|tojson }},
+      backgroundColor: 'rgba(79, 139, 201, 0.85)',
+      borderRadius: 6, // rounded corners
+      barPercentage: 0.6
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { enabled: true }
+    },
+    scales: {
+      y: { beginAtZero: true, ticks: { stepSize: 1, color: '#333', font: { size: 14 } } },
+      x: { ticks: { color: '#333', font: { size: 14 } } }
+    }
+  }
+});
+</script>
+
+<!-- ===== DASHBOARD CSS ===== -->
+<style>
+/* Glass Card Style */
+.glass {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    border-radius: 16px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.glass:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+}
+
+/* Cards Text */
+h6 { letter-spacing: 0.5px; }
+h2 { font-size: 2rem; }
+
+/* Charts padding */
+canvas { 
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+}
+</style>
+
+{% endblock %}

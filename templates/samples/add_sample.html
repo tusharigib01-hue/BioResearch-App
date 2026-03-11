@@ -1,0 +1,106 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h2 class="fw-bold text-primary mb-4">
+        ➕ Add New Biological Sample
+    </h2>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Form Card -->
+    <div class="card shadow-lg border-0 glass">
+        <div class="card-body">
+
+            <form method="POST">
+
+                <!-- Project -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Project</label>
+                    <select name="project_id" class="form-select" required>
+                        <option value="">-- Select Project --</option>
+                        {% for p in projects %}
+                            <option value="{{ p.id }}">{{ p.title }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Sample Code -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Sample Code</label>
+                    <input type="text" name="sample_code" class="form-control" required>
+                </div>
+
+                <!-- Sample Type -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Sample Type</label>
+                    <input type="text" name="sample_type" class="form-control" required>
+                </div>
+
+                <!-- Disease -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Disease</label>
+                    <input type="text" name="disease" class="form-control">
+                </div>
+
+                <!-- Storage -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Storage</label>
+                    <select name="storage" class="form-select">
+                        <option value="Freezer -80°C">Freezer -80°C</option>
+                        <option value="Freezer -20°C">Freezer -20°C</option>
+                        <option value="Liquid Nitrogen">Liquid Nitrogen</option>
+                        <option value="Room Temperature">Room Temperature</option>
+                    </select>
+                </div>
+
+                <!-- Status -->
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Status</label>
+                    <select name="status" class="form-select">
+                        <option value="Active">Active</option>
+                        <option value="Used">Used</option>
+                        <option value="Archived">Archived</option>
+                    </select>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between">
+                    <a href="{{ url_for('samples') }}" class="btn btn-secondary">
+                        ← Back
+                    </a>
+                    <button type="submit" class="btn btn-success px-4">
+                        💾 Save Sample
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<style>
+.glass {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+}
+
+label {
+    color: #023047;
+}
+</style>
+
+{% endblock %}
