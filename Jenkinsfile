@@ -8,12 +8,6 @@ pipeline {
 
     stages {
 
-        stage('Clone Repository') {
-            steps {
-                git 'https://github.com/tusharigib01-hue/BioResearch-App.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $DOCKER_IMAGE:latest .'
@@ -38,5 +32,6 @@ pipeline {
                 sh 'docker run -d -p 5050:5000 --name $CONTAINER_NAME $DOCKER_IMAGE:latest'
             }
         }
+
     }
 }
